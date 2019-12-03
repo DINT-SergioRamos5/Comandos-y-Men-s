@@ -20,23 +20,23 @@ namespace Comandos_y_Menús
     /// </summary>
     public partial class MainWindow : Window
     {
-        ListBoxItem guardado;
+        string guardado = "";
 
         public MainWindow()
         {
-            CentralListBox = new ListBox();
-            guardado = new ListBoxItem();
-            InitializeComponent();
+            CentralListBox = new ListBox();            
+            InitializeComponent();            
         }
 
         private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {            
-            ListBoxItem list = new ListBoxItem();
-            TextBlock  texto = new TextBlock();
-            texto.Text = "Item añadido" ;
-            list.Content = texto;
+        {
 
-            CentralListBox.Items.Add(list);
+            TextBlock texto = new TextBlock
+            {
+                Text = "Item añadido"
+            };
+
+            CentralListBox.Items.Add(texto);
         }
 
         private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -49,32 +49,36 @@ namespace Comandos_y_Menús
 
         private void CopyCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {                       
-            TextBlock textoBlock = new TextBlock();
-            textoBlock.Text = CentralListBox.SelectedItem.ToString();
-            guardado.Content = textoBlock;
+            
+            guardado = CentralListBox.SelectedValue.ToString();
+            
         }
 
         private void CopyCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (CentralListBox.SelectedItem == null )
+            if (CentralListBox.SelectedItem != null )
             {
-                e.CanExecute = false;
+                e.CanExecute = true;
             }
             else
             {
-                e.CanExecute = true;
+                e.CanExecute = false;
             }
         }
 
         private void PasteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            CentralListBox.Items.Add(guardado);
-            guardado.Content = null;
+            TextBlock texto = new TextBlock
+            {
+                Text = guardado
+            };
+            CentralListBox.Items.Add(texto.Text);
+            guardado = "";
         }
 
         private void PasteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (guardado.Content != null && CentralListBox.Items.Count != 10)
+            if (guardado != "" && CentralListBox.Items.Count != 10)
                 e.CanExecute = true;
             else
                 e.CanExecute = false;
@@ -84,6 +88,18 @@ namespace Comandos_y_Menús
         {
             Close();
         }
-        
+
+        private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CentralListBox.Items.Clear();
+        }
+
+        private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (CentralListBox.Items.Count > 0)
+                e.CanExecute = true;
+            else
+                e.CanExecute = false;
+        }
     }
 }

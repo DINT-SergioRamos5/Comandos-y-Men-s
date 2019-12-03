@@ -24,7 +24,10 @@
         <CommandBinding
             Command="local:CustomCommands.Exit"
             Executed="ExitCommand_Executed"/>
-
+        <CommandBinding
+            Command="local:CustomCommands.Delete"
+            Executed="DeleteCommand_Executed"
+            CanExecute="DeleteCommand_CanExecute"/>
     </Window.CommandBindings>
     
     <DockPanel LastChildFill="True">
@@ -53,20 +56,20 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="_Vaciar" InputGestureText="Ctrl+V">
+                <MenuItem Header="_Vaciar" InputGestureText="Ctrl+V" Command="local:CustomCommands.Delete">
                     <MenuItem.Icon>
                         <Image Source="Iconos/delete.ico"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Ver">
-                <MenuItem Header="Barra de herramientas _General" IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Barra de herramientas _Edicion" IsCheckable="True" IsChecked="True"/>
+                <MenuItem x:Name="GeneralMenu"  Header="Barra de herramientas _General" IsCheckable="True" IsChecked="True"/>
+                <MenuItem x:Name="EdicionMenu"  Header="Barra de herramientas _Edicion" IsCheckable="True" IsChecked="True"/>
             </MenuItem>
         </Menu>
 
         <ToolBarTray DockPanel.Dock="Top">
-            <ToolBar>
+            <ToolBar x:Name="PrimeraToolBar" Style="{StaticResource PrimerToolBar}">
                 <Button Command="ApplicationCommands.New">
                     <Image Source="Iconos/add.ico"></Image>
                 </Button>
@@ -74,14 +77,14 @@
                     <Image Source="Iconos/exit.ico"></Image>
                 </Button>
             </ToolBar>
-            <ToolBar>
+            <ToolBar x:Name="SegundaToolBar" Style="{StaticResource SegundoToolBar}" >
                 <Button x:Name="CopyButtonToolBar" Command="ApplicationCommands.Copy">
                     <Image Source="Iconos/copy.ico"></Image>
                 </Button>
                 <Button x:Name="PasteButtonToolBar" Command="ApplicationCommands.Paste">
                     <Image Source="Iconos/paste.ico"></Image>
                 </Button>
-                <Button>
+                <Button Command="local:CustomCommands.Delete">
                     <Image Source="Iconos/delete.ico"></Image>
                 </Button>
             </ToolBar>
@@ -92,10 +95,10 @@
                 <TextBlock>Sergio Ramos Santonja</TextBlock>
             </StatusBarItem>            
             <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock>HORA</TextBlock>
+                <TextBlock x:Name="HoraTextBlock" ></TextBlock>
             </StatusBarItem>
         </StatusBar>
 
-        <ListBox x:Name="CentralListBox"  Margin="10"></ListBox>
+        <ListBox x:Name="CentralListBox"  Margin="10" SelectedValuePath="Text"></ListBox>
     </DockPanel>
 </Window>

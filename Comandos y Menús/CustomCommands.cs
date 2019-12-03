@@ -18,5 +18,15 @@ namespace Comandos_y_Menús
                     new KeyGesture(Key.S, ModifierKeys.Control)
                 }
             );
+
+        public static readonly RoutedUICommand Delete = new RoutedUICommand(
+                "Delete",
+                "Delete",
+                typeof(CustomCommands),
+                new InputGestureCollection()
+                {
+                    new KeyGesture(Key.V, ModifierKeys.Alt)
+                }
+            );
     }
 }
