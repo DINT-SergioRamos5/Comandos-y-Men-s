@@ -41,7 +41,7 @@ namespace Comandos_y_Menús
 
         private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (CentralListBox.Items.Count < 10)
+            if (CentralListBox.Items.Count < 10) 
                 e.CanExecute = true;
             else
                 e.CanExecute = false;
